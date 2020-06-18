@@ -30,16 +30,7 @@ jobs:
           java -version
       - name: Test project
         run: |
-          sudo ./gradlew -i -d testDebugUnitTest --stacktrace
-#       - name: Run instrumentation tests
-#         uses: reactivecircus/android-emulator-runner@v2
-#         with:
-#           api-level: 23
-#           target: default
-#           arch: x86
-#           profile: Nexus 6
-#           script: sudo ./gradlew test --stacktrace
-      # Archiving code coverage results 
+          sudo ./gradlew test
       - name: Archive code coverage results
         uses: actions/upload-artifact@v1
         with:
