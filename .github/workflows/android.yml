@@ -6,6 +6,10 @@ jobs:
   build:
     name: dConnect-sdk-for-android
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        api-level: [21, 23, 29]
+        target: [default, google_apis]
     steps:
       - name: Setup timezone
         uses: zcong1993/setup-timezone@master
@@ -33,12 +37,13 @@ jobs:
           ls ../
           java -version
       - name: Run instrumentation tests
-        uses: malinskiy/action-android/emulator-run-cmd@release/0.0.5
+        uses: reactivecircus/android-emulator-runner@v2
         with:
-          cmd: sudo ./gradlew connectedCheck --stacktrace
-          api: 25
-          tag: default
-          abi: x86
+          api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.target }}
+          arch: x86_64
+          profile: Nexus 6
+          script: sudo ./gradlew connectedCheck
       - name: Archive code coverage results
         uses: actions/upload-artifact@v1
         with:
