@@ -86,7 +86,7 @@ public class RFC3339DateUtils {
             }
         }
 
-        String tmp = dateAddString + timeZone;
+        String tmp = dateAddString + timeZone.replace(":", "");
         try {
             SimpleDateFormat format = new SimpleDateFormat(RFC_3339, locale);
             converted = new Date(format.parse(tmp).getTime());
@@ -220,7 +220,12 @@ public class RFC3339DateUtils {
         if (dateCalendar != null) {
             SimpleDateFormat format = new SimpleDateFormat(RFC_3339, locale);
             format.setTimeZone(timezone);
-            return format.format(dateCalendar.getTime());
+            String dateString =  format.format(dateCalendar.getTime());
+            if (dateString.lastIndexOf(':') == dateString.length() - 3) {
+                return dateString;
+            }
+            return dateString.substring(0, dateString.length() - 2)
+                    + ":" + dateString.substring(dateString.length() - 2);
         }
         return null;
     }
@@ -236,7 +241,12 @@ public class RFC3339DateUtils {
         if (date != null) {
             SimpleDateFormat format = new SimpleDateFormat(RFC_3339, locale);
             format.setTimeZone(timezone);
-            return format.format(date);
+            String dateString =  format.format(date);
+            if (dateString.lastIndexOf(':') == dateString.length() - 3) {
+                return dateString;
+            }
+            return dateString.substring(0, dateString.length() - 2)
+                    + ":" + dateString.substring(dateString.length() - 2);
         }
         return null;
     }
@@ -251,7 +261,12 @@ public class RFC3339DateUtils {
     public static String toString(final long dateLong, final Locale locale, final TimeZone timezone) {
         SimpleDateFormat format = new SimpleDateFormat(RFC_3339, locale);
         format.setTimeZone(timezone);
-        return  format.format(new Date(dateLong));
+        String dateString =  format.format(new Date(dateLong));
+        if (dateString.lastIndexOf(':') == dateString.length() - 3) {
+            return dateString;
+        }
+        return dateString.substring(0, dateString.length() - 2)
+                + ":" + dateString.substring(dateString.length() - 2);
     }
 
     /**
