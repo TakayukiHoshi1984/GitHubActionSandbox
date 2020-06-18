@@ -25,7 +25,7 @@ jobs:
           sudo ./gradlew assemble --stacktrace
       - name: Test project
         run: |
-          sudo ./gradlew test --stacktrace
+          sudo ./gradlew -i -d test --stacktrace
 #       - name: Run instrumentation tests
 #         uses: reactivecircus/android-emulator-runner@v2
 #         with:
@@ -43,4 +43,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: code-coverage-report
-          path: dconnect-sdk-for-android/build/reports/androidTests/connected/index.html
+          path: dconnect-sdk-for-android/build/reports/tests/testDebugUnitTest/index.html
