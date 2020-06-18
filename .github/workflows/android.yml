@@ -18,6 +18,9 @@ jobs:
       - name: Build project
         run: |
           pwd
+          echo "${{ secrets.GPR_USER }}"
+          export GPR_USER="${{ secrets.GPR_USER }}"
+          export GPR_API_KEY="${{ secrets.GPR_API_KEY }}"
           chmod +x ./gradlew
           sudo ./gradlew assemble --stacktrace
       - name: Run instrumentation tests
