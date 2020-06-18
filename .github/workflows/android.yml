@@ -11,6 +11,8 @@ jobs:
         api-level: [21, 23, 29]
         target: [default, google_apis]
     steps:
+      - name: Set Time Zone
+        run: TZ=Asia/Tokyo hugo --minify
       - name: Checkout
         uses: actions/checkout@v1
       - name: Install JDK 1.8
