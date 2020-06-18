@@ -4,9 +4,13 @@ on: [push, pull_request]
 
 jobs:
   build:
-    name: JDK 1.8
+    name: dConnect-sdk-for-android
     runs-on: macOS-latest
     steps:
+      - name: Setup timezone
+        uses: zcong1993/setup-timezone@master
+        with:
+          timezone: Asia/Tokyo
       - name: Checkout
         uses: actions/checkout@v1
       - name: Install JDK 1.8
