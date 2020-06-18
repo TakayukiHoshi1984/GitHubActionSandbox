@@ -18,7 +18,6 @@ jobs:
       - name: Build project
         run: |
           pwd
-          export ANDROID_SDK_ROOT=/Users/runner/android-sdk/sdk_home
           echo "${{ secrets.GPR_USER }}"
           export GPR_USER="${{ secrets.GPR_USER }}"
           export GPR_API_KEY="${{ secrets.GPR_API_KEY }}"
