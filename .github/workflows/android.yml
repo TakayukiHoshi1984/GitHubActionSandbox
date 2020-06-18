@@ -30,7 +30,7 @@ jobs:
           target: default
           arch: x86
           profile: Nexus 6
-          script: sudo ./gradlew check --stacktrace
+          script: sudo ./gradlew test --stacktrace
       - name: show Directory
         run: |
           pwd
