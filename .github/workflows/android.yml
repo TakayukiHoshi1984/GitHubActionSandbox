@@ -32,11 +32,15 @@ jobs:
           pwd
           ls ../
           java -version
-      - name: Test project
-        run: |
-          sudo ./gradlew test
+      - name: Run instrumentation tests
+        uses: malinskiy/action-android/emulator-run-cmd@release/0.0.5
+        with:
+          cmd: sudo ./gradlew connectedCheck --stacktrace
+          api: 25
+          tag: default
+          abi: x86
       - name: Archive code coverage results
         uses: actions/upload-artifact@v1
         with:
           name: code-coverage-report
-          path: dconnect-sdk-for-android/build/reports/tests/testDebugUnitTest/index.html
+          path: dconnect-sdk-for-android/build/reports/androidTests/connected/index.html
