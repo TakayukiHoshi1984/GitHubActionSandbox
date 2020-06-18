@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     name: dConnect-sdk-for-android
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Setup timezone
         uses: zcong1993/setup-timezone@master
