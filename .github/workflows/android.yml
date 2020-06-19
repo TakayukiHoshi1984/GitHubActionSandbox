@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        api-level: [29]
+        api-level: [23]
         target: [google_apis]
     steps:
       - name: Set Time Zone
