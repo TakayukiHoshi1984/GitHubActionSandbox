@@ -41,6 +41,7 @@ jobs:
           target: ${{ matrix.target }}
           arch: x86_64
           profile: Nexus 6
+          emulator-options: -timezone Asia/Tokyo
           script: sudo ./gradlew connectedCheck
       - name: Archive code coverage results
         uses: actions/upload-artifact@v1
