@@ -33,11 +33,11 @@ public class RFC3339DateUtilsTest {
     /**
      * テスト用のRFC3339の文字列.
      */
-    private static final String RFC3339_TEST_DATE = "2017-12-02T12:23:12+00:00";
+    private static final String RFC3339_TEST_DATE = "2017-12-02T12:23:12+09:00";
     /**
      * テスト用のISO8601の文字列.
      */
-    private static final String ISO8601_TEST_DATE = "2017-12-02T12:23:12+0000";
+    private static final String ISO8601_TEST_DATE = "2017-12-02T12:23:12+0900";
     /**
      * テスト用の日付文字列.
      */
