@@ -30,7 +30,7 @@ jobs:
           api: 25
           tag: default
           abi: x86
-          cmdOptions: -no-snapshot-save -noaudio -no-boot-anim -accel auto -timezone Asia/Tokyo
+          cmdOptions: -no-snapshot-save -noaudio -no-boot-anim -accel no -timezone Asia/Tokyo
       - name: Archive code coverage results
         uses: actions/upload-artifact@v1
         with:
