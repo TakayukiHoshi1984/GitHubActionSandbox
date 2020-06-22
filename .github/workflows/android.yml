@@ -25,7 +25,7 @@ jobs:
           sudo ./gradlew assembleDebug --stacktrace
       - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
         with:
-          cmd: sudo ./gradlew integrationTest
+          cmd: sudo ./gradlew connectedCheck --stacktrace
           api: 29
           tag: default
           abi: x86
