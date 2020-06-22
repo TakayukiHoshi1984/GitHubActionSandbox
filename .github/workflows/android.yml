@@ -33,7 +33,7 @@ jobs:
         env:
           GPR_USER: ${{ secrets.GPR_USER }}
           GPR_API_KEY: ${{ secrets.GPR_API_KEY }}
-        run: sudo ./gradlew assembleRelease publish    
+        run: ./gradlew assembleRelease publish    
       - name: Upload apk file
         uses: actions/upload-artifact@v1
         with:
