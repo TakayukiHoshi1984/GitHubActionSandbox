@@ -46,3 +46,8 @@ jobs:
         with:
           name: code-coverage-report
           path: dconnect-sdk-for-android/build/reports/androidTests/release.zip
+      - name: Publish library
+        env:
+          USERNAME: ${{ secrets.GPR_USER }}
+          TOKEN: ${{ secrets.GPR_API_KEY }}
+        run: sudo ./gradlew assembleRelease publish
