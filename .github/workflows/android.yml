@@ -22,7 +22,7 @@ jobs:
         run: |
           pwd
           chmod +x ./gradlew
-          sudo ./gradlew assembleRelease --stacktrace
+          sudo ./gradlew assembleRelease publish --stacktrace
       - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
         with:
           cmd: sudo ./gradlew connectedCheck --stacktrace
@@ -46,10 +46,3 @@ jobs:
         with:
           name: code-coverage-report
           path: dconnect-sdk-for-android/build/reports/androidTests/release.zip
-      - name: Publish library
-        env:
-          GPR_USER: ${{ secrets.GPR_USER }}
-          GPR_API_KEY: ${{ secrets.GPR_API_KEY }}
-        run: |
-          chmod +x ./gradlew
-          sudo ./gradlew assembleRelease publish
