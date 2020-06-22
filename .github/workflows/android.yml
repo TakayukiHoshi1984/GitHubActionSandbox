@@ -31,8 +31,11 @@ jobs:
           abi: x86_64
           cmdOptions: -no-snapshot-save -noaudio -no-boot-anim -timezone Asia/Tokyo
       - name: Publish AAR
+        env:
+          GPR_USER: ${{ secrets.GPR_USER }}
+          GPR_API_KEY: ${{ secrets.GPR_API_KEY }}
         run: |
-          pwd
+          echo $GPR_USER
           chmod +x ./gradlew
           sudo ./gradlew assembleRelease publish --stacktrace    
 #       - name: Upload apk file
