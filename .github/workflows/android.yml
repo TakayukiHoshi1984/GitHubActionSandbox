@@ -21,7 +21,7 @@ jobs:
           GPR_API_KEY: ${{ secrets.GPR_API_KEY }}
         run: |
           chmod +x ./gradlew
-          sudo ./gradlew assembleRelease publish
+          sudo ./gradlew assembleRelease
       - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
         with:
           cmd: sudo ./gradlew connectedCheck --stacktrace
@@ -34,17 +34,16 @@ jobs:
 #           GPR_USER: ${{ secrets.GPR_USER }}
 #           GPR_API_KEY: ${{ secrets.GPR_API_KEY }}
 #         run: sudo ./gradlew assembleRelease publish    
-#       - name: Upload apk file
-#         uses: actions/upload-artifact@v1
-#         with:
-#           name: Upload dconnect-sdk-for-android release aar
-#           path: dconnect-sdk-for-android/build/outputs/aar/dconnect-sdk-for-android-release.aar
+      - name: Upload apk file
+        uses: actions/upload-artifact@v1
+        with:
+          name: Upload dconnect-sdk-for-android release aar
+          path: dconnect-sdk-for-android/build/outputs/aar/dconnect-sdk-for-android-release.aar
       - name: Pack source code in zip file
         run: |
           cd dconnect-sdk-for-android/build/reports/androidTests
           sudo mv connected code-coverage-report
           sudo zip -r release.zip ./code-coverage-report
-          ls
       - name: Archive code coverage results
         uses: actions/upload-artifact@v1
         with:
