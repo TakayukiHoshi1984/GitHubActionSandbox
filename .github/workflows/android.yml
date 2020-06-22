@@ -33,8 +33,8 @@ jobs:
       - name: Upload apk file
         uses: actions/upload-artifact@v1
         with:
-          name: aar
-          path: dconnect-sdk-for-android/build/outputs/aar/dconnect-sdk-for-android-debug.aar
+          name: Upload dconnect-sdk-for-android release aar
+          path: dconnect-sdk-for-android/build/outputs/aar/dconnect-sdk-for-android-release.aar
       - name: Pack source code in zip file
         run: |
           cd dconnect-sdk-for-android/build/reports/androidTests
