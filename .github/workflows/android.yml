@@ -37,7 +37,7 @@ jobs:
           path: dconnect-sdk-for-android/build/outputs/aar/dconnect-sdk-for-android-debug.aar
       - name: Pack source code in zip file
         run: |
-          zip -j -r release.zip dconnect-sdk-for-android/build/reports/androidTests/connected
+          zip -r release.zip dconnect-sdk-for-android/build/reports/androidTests/connected
           ls
       - name: Archive code coverage results
         uses: actions/upload-artifact@v1
