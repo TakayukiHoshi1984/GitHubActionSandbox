@@ -35,8 +35,12 @@ jobs:
         with:
           name: aar
           path: dconnect-sdk-for-android/build/outputs/aar/dconnect-sdk-for-android-debug.aar
+      - name: Create Reports zip
+        uses: montudor/action-zip@v0.1.0
+        with:
+          args: zip -qq -r ./dconnect-sdk-for-android/build/reports/androidTests/dconnect-sdk-for-android-test.zip ./dconnect-sdk-for-android/build/reports/androidTests/connected
       - name: Archive code coverage results
         uses: actions/upload-artifact@v1
         with:
           name: code-coverage-report
-          path: dconnect-sdk-for-android/build/reports/androidTests/connected/index.html
+          path: dconnect-sdk-for-android/build/reports/androidTests/dconnect-sdk-for-android-test.zip
