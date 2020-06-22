@@ -18,7 +18,6 @@ jobs:
       - name: Build project
         run: |
           pwd
-          echo "${{ secrets.GPR_USER }}"
           export GPR_USER="${{ secrets.GPR_USER }}"
           export GPR_API_KEY="${{ secrets.GPR_API_KEY }}"
           chmod +x ./gradlew
@@ -50,4 +49,7 @@ jobs:
         env:
           USERNAME: ${{ secrets.GPR_USER }}
           TOKEN: ${{ secrets.GPR_API_KEY }}
-        run: sudo ./gradlew assembleRelease publish
+        run: |
+          export GPR_USER="${{ secrets.GPR_USER }}"
+          export GPR_API_KEY="${{ secrets.GPR_API_KEY }}"
+          sudo ./gradlew assembleRelease publish
