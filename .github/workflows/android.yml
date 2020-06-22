@@ -22,7 +22,7 @@ jobs:
           export GPR_USER="${{ secrets.GPR_USER }}"
           export GPR_API_KEY="${{ secrets.GPR_API_KEY }}"
           chmod +x ./gradlew
-          sudo ./gradlew assembleDebug --stacktrace
+          sudo ./gradlew assembleRelease --stacktrace
       - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
         with:
           cmd: sudo ./gradlew connectedCheck --stacktrace
