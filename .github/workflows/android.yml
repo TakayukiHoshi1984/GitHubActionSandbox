@@ -23,8 +23,12 @@ jobs:
           export GPR_API_KEY="${{ secrets.GPR_API_KEY }}"
           chmod +x ./gradlew
           sudo ./gradlew assembleDebug --stacktrace
-      - name: "Run UI Tests"
-        uses: vgaidarji/android-github-actions-emulator@v1.0.1
+      - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
+        with:
+          cmd: sudo ./gradlew integrationTest
+          api: 29
+          tag: default
+          abi: x86
       - name: Upload apk file
         uses: actions/upload-artifact@v1
         with:
