@@ -16,10 +16,11 @@ jobs:
       - name: Install Android SDK
         uses: malinskiy/action-android/install-sdk@release/0.0.5
       - name: Build project
+        env:
+          GPR_USER: ${{ secrets.GPR_USER }}
+          GPR_API_KEY: ${{ secrets.GPR_API_KEY }}
         run: |
           pwd
-          export GPR_USER="${{ secrets.GPR_USER }}"
-          export GPR_API_KEY="${{ secrets.GPR_API_KEY }}"
           chmod +x ./gradlew
           sudo ./gradlew assembleRelease --stacktrace
       - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
@@ -47,9 +48,8 @@ jobs:
           path: dconnect-sdk-for-android/build/reports/androidTests/release.zip
       - name: Publish library
         env:
-          USERNAME: ${{ secrets.GPR_USER }}
-          TOKEN: ${{ secrets.GPR_API_KEY }}
+          GPR_USER: ${{ secrets.GPR_USER }}
+          GPR_API_KEY: ${{ secrets.GPR_API_KEY }}
         run: |
-          export GPR_USER="${{ secrets.GPR_USER }}"
-          export GPR_API_KEY="${{ secrets.GPR_API_KEY }}"
+          chmod +x ./gradlew
           sudo ./gradlew assembleRelease publish
