@@ -29,11 +29,11 @@ jobs:
           tag: default
           abi: x86_64
           cmdOptions: -no-snapshot-save -noaudio -no-boot-anim -timezone Asia/Tokyo
-#       - name: Publish AAR
-#         env:
-#           GPR_USER: ${{ secrets.GPR_USER }}
-#           GPR_API_KEY: ${{ secrets.GPR_API_KEY }}
-#         run: sudo ./gradlew assembleRelease publish    
+      - name: Publish AAR
+        env:
+          GPR_USER: ${{ secrets.GPR_USER }}
+          GPR_API_KEY: ${{ secrets.GPR_API_KEY }}
+        run: sudo ./gradlew assembleRelease publish    
       - name: Upload apk file
         uses: actions/upload-artifact@v1
         with:
