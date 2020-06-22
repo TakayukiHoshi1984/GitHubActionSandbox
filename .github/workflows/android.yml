@@ -30,11 +30,13 @@ jobs:
           tag: default
           abi: x86_64
           cmdOptions: -no-snapshot-save -noaudio -no-boot-anim -timezone Asia/Tokyo
-      - name: Upload apk file
-        uses: actions/upload-artifact@v1
-        with:
-          name: apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+      - name: ls
+        run: ls app/build/outputs/apk/debug
+#       - name: Upload apk file
+#         uses: actions/upload-artifact@v1
+#         with:
+#           name: apk
+#           path: app/build/outputs/apk/debug/app-debug.apk
       - name: Archive code coverage results
         uses: actions/upload-artifact@v1
         with:
