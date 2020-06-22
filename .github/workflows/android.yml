@@ -20,7 +20,6 @@ jobs:
           GPR_USER: ${{ secrets.GPR_USER }}
           GPR_API_KEY: ${{ secrets.GPR_API_KEY }}
         run: |
-          pwd
           chmod +x ./gradlew
           sudo ./gradlew assembleRelease --stacktrace
       - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
@@ -34,10 +33,7 @@ jobs:
         env:
           GPR_USER: ${{ secrets.GPR_USER }}
           GPR_API_KEY: ${{ secrets.GPR_API_KEY }}
-        run: |
-          printenv
-          chmod +x ./gradlew
-          sudo ./gradlew assembleRelease publish    
+        run: sudo ./gradlew assembleRelease publish    
 #       - name: Upload apk file
 #         uses: actions/upload-artifact@v1
 #         with:
