@@ -22,7 +22,7 @@ jobs:
         run: |
           pwd
           chmod +x ./gradlew
-          sudo ./gradlew assembleRelease publish --stacktrace
+          sudo ./gradlew assembleRelease --stacktrace
       - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
         with:
           cmd: sudo ./gradlew connectedCheck --stacktrace
@@ -30,11 +30,16 @@ jobs:
           tag: default
           abi: x86_64
           cmdOptions: -no-snapshot-save -noaudio -no-boot-anim -timezone Asia/Tokyo
-      - name: Upload apk file
-        uses: actions/upload-artifact@v1
-        with:
-          name: Upload dconnect-sdk-for-android release aar
-          path: dconnect-sdk-for-android/build/outputs/aar/dconnect-sdk-for-android-release.aar
+      - name: Publish AAR
+        run: |
+          pwd
+          chmod +x ./gradlew
+          sudo ./gradlew assembleRelease publish --stacktrace    
+#       - name: Upload apk file
+#         uses: actions/upload-artifact@v1
+#         with:
+#           name: Upload dconnect-sdk-for-android release aar
+#           path: dconnect-sdk-for-android/build/outputs/aar/dconnect-sdk-for-android-release.aar
       - name: Pack source code in zip file
         run: |
           cd dconnect-sdk-for-android/build/reports/androidTests
