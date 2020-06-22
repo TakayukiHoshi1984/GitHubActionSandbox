@@ -30,13 +30,11 @@ jobs:
           tag: default
           abi: x86_64
           cmdOptions: -no-snapshot-save -noaudio -no-boot-anim -timezone Asia/Tokyo
-      - name: ls
-        run: ls app/build/outputs/apk/debug
-#       - name: Upload apk file
-#         uses: actions/upload-artifact@v1
-#         with:
-#           name: apk
-#           path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Upload apk file
+        uses: actions/upload-artifact@v1
+        with:
+          name: aar
+          path: dconnect-sdk-for-android/build/outputs/aar/dconnect-sdk-for-android-debug.aar
       - name: Archive code coverage results
         uses: actions/upload-artifact@v1
         with:
