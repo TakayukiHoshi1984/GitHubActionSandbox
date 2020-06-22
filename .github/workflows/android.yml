@@ -16,10 +16,9 @@ jobs:
       - name: Install Android SDK
         uses: malinskiy/action-android/install-sdk@release/0.0.5
       - name: Build project
-        env:
-          GPR_USER: ${{ secrets.GPR_USER }}
-          GPR_API_KEY: ${{ secrets.GPR_API_KEY }}
         run: |
+          sudo export GPR_USER="${{ secrets.GPR_USER }}"
+          sudo export GPR_API_KEY="${{ secrets.GPR_API_KEY }}"
           chmod +x ./gradlew
           sudo ./gradlew assembleRelease
       - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
@@ -30,10 +29,10 @@ jobs:
           abi: x86_64
           cmdOptions: -no-snapshot-save -noaudio -no-boot-anim -timezone Asia/Tokyo
       - name: Publish AAR
-        env:
-          GPR_USER: ${{ secrets.GPR_USER }}
-          GPR_API_KEY: ${{ secrets.GPR_API_KEY }}
-        run: ./gradlew assembleRelease publish    
+        run: |
+          sudo export GPR_USER="${{ secrets.GPR_USER }}"
+          sudo export GPR_API_KEY="${{ secrets.GPR_API_KEY }}"
+          sudo ./gradlew assembleRelease publish    
       - name: Upload apk file
         uses: actions/upload-artifact@v1
         with:
