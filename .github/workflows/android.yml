@@ -17,6 +17,7 @@ jobs:
         uses: malinskiy/action-android/install-sdk@release/0.0.5
   build:
     name: build
+    needs: [preparation]
     runs-on: macos-latest
     steps:
       - name: Build project
@@ -28,6 +29,7 @@ jobs:
           ./gradlew assembleRelease
   test:
       name: test
+      needs: [preparation, build]
       runs-on: macos-latest
       steps:
       - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
@@ -39,6 +41,7 @@ jobs:
           cmdOptions: -no-snapshot-save -noaudio -no-boot-anim -timezone Asia/Tokyo
   doc:
       name: document
+      needs: [preparation]
       runs-on: macos-latest
       steps: 
         - name: Generate Javadoc For SDK
@@ -47,6 +50,7 @@ jobs:
           run: ./gradlew generateJavadocForSDKJUnit
   publish:
       name: publish
+      needs: [preparation, build, test]
       runs-on: macos-latest
       steps:
       - name: Publish AAR
@@ -58,6 +62,7 @@ jobs:
           ./gradlew assembleRelease publish    
   upload:
       name: upload
+      needs: [preparation, build, test, doc]
       runs-on: macos-latest
       steps:
       - name: Upload apk file
