@@ -3,8 +3,8 @@ name: dConnect-sdk-for-android CI
 on: [push, pull_request]
 
 jobs:
-  preparation:
-    name: preparation
+  release:
+    name: release
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -15,11 +15,6 @@ jobs:
           java-version: 1.8
       - name: Install Android SDK
         uses: malinskiy/action-android/install-sdk@release/0.0.5
-  build:
-    name: build
-    needs: [preparation]
-    runs-on: macos-latest
-    steps:
       - name: Build project
         env:
           GPR_USER: ${{ secrets.GPR_USER }}
@@ -27,11 +22,6 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew assembleRelease
-  test:
-      name: test
-      needs: [preparation, build]
-      runs-on: macos-latest
-      steps:
       - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
         with:
           cmd: ./gradlew connectedCheck --stacktrace
@@ -39,20 +29,12 @@ jobs:
           tag: default
           abi: x86_64
           cmdOptions: -no-snapshot-save -noaudio -no-boot-anim -timezone Asia/Tokyo
-  doc:
-      name: document
-      needs: [preparation]
-      runs-on: macos-latest
-      steps: 
-        - name: Generate Javadoc For SDK
-          run: ./gradlew generateJavadocForSDK
-        - name: Generate Javadoc For SDKJUnit
-          run: ./gradlew generateJavadocForSDKJUnit
-  publish:
-      name: publish
-      needs: [preparation, build, test]
-      runs-on: macos-latest
-      steps:
+      - name: Generate Javadoc For SDK
+        if: always()
+        run: ./gradlew generateJavadocForSDK
+      - name: Generate Javadoc For SDKJUnit
+        if: always()
+        run: ./gradlew generateJavadocForSDKJUnit
       - name: Publish AAR
         env:
           GPR_USER: ${{ secrets.GPR_USER }}
@@ -60,17 +42,14 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew assembleRelease publish    
-  upload:
-      name: upload
-      needs: [preparation, build, test, doc]
-      runs-on: macos-latest
-      steps:
       - name: Upload apk file
+        if: always()
         uses: actions/upload-artifact@v1
         with:
           name: Upload dconnect-sdk-for-android release aar
           path: dconnect-sdk-for-android/build/outputs/aar/dconnect-sdk-for-android-release.aar
       - name: Pack test result and document in zip file
+        if: always()
         run: |
           sudo zip -r DeviceConnectSDK-Javadoc.zip ./DeviceConnectSDK-Javadoc
           sudo zip -r DeviceConnectSDK-JUnit-Javadoc.zip ./DeviceConnectSDK-JUnit-Javadoc
@@ -78,16 +57,19 @@ jobs:
           sudo mv connected code-coverage-report
           sudo zip -r release.zip ./code-coverage-report
       - name: Archive code coverage results
+        if: always()
         uses: actions/upload-artifact@v1
         with:
           name: code-coverage-report
           path: dconnect-sdk-for-android/build/reports/androidTests/release.zip
       - name: Archive DeviceConnectSDK-Javadoc
+        if: always()
         uses: actions/upload-artifact@v1
         with:
           name: DeviceConnectSDK-Javadoc
           path: DeviceConnectSDK-Javadoc.zip
       - name: Archive DeviceConnectSDK-Javadoc
+        if: always()
         uses: actions/upload-artifact@v1
         with:
           name: DeviceConnectSDK-JUnit-Javadoc
