@@ -1,10 +1,10 @@
-name: CI
+name: dConnect-sdk-for-android CI
 
 on: [push, pull_request]
 
 jobs:
-  build:
-    name: dConnect-sdk-for-android
+  preparation:
+    name: preparation
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -15,6 +15,10 @@ jobs:
           java-version: 1.8
       - name: Install Android SDK
         uses: malinskiy/action-android/install-sdk@release/0.0.5
+  build:
+    name: build
+    runs-on: macos-latest
+    steps:
       - name: Build project
         env:
           GPR_USER: ${{ secrets.GPR_USER }}
@@ -22,6 +26,10 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew assembleRelease
+  test:
+      name: test
+      runs-on: macos-latest
+      steps:
       - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
         with:
           cmd: ./gradlew connectedCheck --stacktrace
@@ -29,6 +37,18 @@ jobs:
           tag: default
           abi: x86_64
           cmdOptions: -no-snapshot-save -noaudio -no-boot-anim -timezone Asia/Tokyo
+  doc:
+      name: document
+      runs-on: macos-latest
+      steps: 
+        - name: Generate Javadoc For SDK
+          run: ./gradlew generateJavadocForSDK
+        - name: Generate Javadoc For SDKJUnit
+          run: ./gradlew generateJavadocForSDKJUnit
+  publish:
+      name: publish
+      runs-on: macos-latest
+      steps:
       - name: Publish AAR
         env:
           GPR_USER: ${{ secrets.GPR_USER }}
@@ -36,13 +56,19 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew assembleRelease publish    
+  upload:
+      name: upload
+      runs-on: macos-latest
+      steps:
       - name: Upload apk file
         uses: actions/upload-artifact@v1
         with:
           name: Upload dconnect-sdk-for-android release aar
           path: dconnect-sdk-for-android/build/outputs/aar/dconnect-sdk-for-android-release.aar
-      - name: Pack source code in zip file
+      - name: Pack test result and document in zip file
         run: |
+          sudo zip -r DeviceConnectSDK-Javadoc.zip ./DeviceConnectSDK-Javadoc
+          sudo zip -r DeviceConnectSDK-JUnit-Javadoc.zip ./DeviceConnectSDK-JUnit-Javadoc
           cd dconnect-sdk-for-android/build/reports/androidTests
           sudo mv connected code-coverage-report
           sudo zip -r release.zip ./code-coverage-report
@@ -51,3 +77,13 @@ jobs:
         with:
           name: code-coverage-report
           path: dconnect-sdk-for-android/build/reports/androidTests/release.zip
+      - name: Archive DeviceConnectSDK-Javadoc
+        uses: actions/upload-artifact@v1
+        with:
+          name: DeviceConnectSDK-Javadoc
+          path: DeviceConnectSDK-Javadoc.zip
+      - name: Archive DeviceConnectSDK-Javadoc
+        uses: actions/upload-artifact@v1
+        with:
+          name: DeviceConnectSDK-JUnit-Javadoc
+          path: DeviceConnectSDK-JUnit-Javadoc.zip
