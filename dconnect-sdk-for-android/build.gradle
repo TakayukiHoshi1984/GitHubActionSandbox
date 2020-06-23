@@ -58,55 +58,55 @@ project.ext {
     }
 }
 
-//project.androidVariants.all { variant ->
-//    task("generateJavadocForSDK", type: Javadoc, overwrite: true) {
-//        title = "Device Connect SDK for Android"
-//        description = "Generates Javadoc for $variant.name."
-//        source = android.sourceSets.main.java.sourceFiles
-//        configurations.implementation.setCanBeResolved(true)
-//        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-//        classpath += configurations.implementation
-//        destinationDir = new File("${project.getRootDir()}/DeviceConnectSDK-Javadoc/")
-//
-//        options {
-//            links("http://docs.oracle.com/javase/jp/8/docs/api/");
-//            linksOffline("http://d.android.com/reference", "${android.sdkDirectory}/docs/reference")
-//            setMemberLevel(JavadocMemberLevel.PROTECTED)
-//            docEncoding = 'UTF-8'
-//            encoding = 'UTF-8'
-//            charSet = 'UTF-8'
-//        }
-//
-//        exclude '**/org/deviceconnect/android/logger/**'
-//        exclude '**/BuildConfig.java'
-//        exclude '**/R.java'
-//    }
-//
-//}
+project.androidVariants.all { variant ->
+    task("generateJavadocForSDK", type: Javadoc, overwrite: true) {
+        title = "Device Connect SDK for Android"
+        description = "Generates Javadoc for $variant.name."
+        source = android.sourceSets.main.java.sourceFiles
+        configurations.implementation.setCanBeResolved(true)
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        classpath += configurations.implementation
+        destinationDir = new File("${project.getRootDir()}/DeviceConnectSDK-Javadoc/")
 
-//android.testVariants.all { variant ->
-//    task("generateJavadocForSDKJUnit", type: Javadoc, overwrite: true) {
-//        title = "Android Device Connect SDK Unit Test"
-//        description = "Generates Javadoc for JUnit"
-//        configurations.implementation.setCanBeResolved(true)
-//        source = android.sourceSets.androidTest.java.sourceFiles
-//        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-//        classpath += configurations.implementation
-//        destinationDir = new File("${project.getRootDir()}/DeviceConnectSDK-JUnit-Javadoc/")
-//        failOnError = false
-//        options {
-//            links("http://docs.oracle.com/javase/jp/8/docs/api/");
-//            linksOffline("http://d.android.com/reference", "${android.sdkDirectory}/docs/reference")
-//            setMemberLevel(JavadocMemberLevel.PUBLIC)
-//            docEncoding = 'UTF-8'
-//            encoding = 'UTF-8'
-//            charSet = 'UTF-8'
-//        }
-//        exclude '**/org/deviceconnect/message/server/**'
-//        exclude '**/BuildConfig.java'
-//        exclude '**/R.java'
-//    }
-//}
+        options {
+            links("http://docs.oracle.com/javase/jp/8/docs/api/");
+            linksOffline("http://d.android.com/reference", "${android.sdkDirectory}/docs/reference")
+            setMemberLevel(JavadocMemberLevel.PROTECTED)
+            docEncoding = 'UTF-8'
+            encoding = 'UTF-8'
+            charSet = 'UTF-8'
+        }
+
+        exclude '**/org/deviceconnect/android/logger/**'
+        exclude '**/BuildConfig.java'
+        exclude '**/R.java'
+    }
+
+}
+
+android.testVariants.all { variant ->
+    task("generateJavadocForSDKJUnit", type: Javadoc, overwrite: true) {
+        title = "Android Device Connect SDK Unit Test"
+        description = "Generates Javadoc for JUnit"
+        configurations.implementation.setCanBeResolved(true)
+        source = android.sourceSets.androidTest.java.sourceFiles
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        classpath += configurations.implementation
+        destinationDir = new File("${project.getRootDir()}/DeviceConnectSDK-JUnit-Javadoc/")
+        failOnError = false
+        options {
+            links("http://docs.oracle.com/javase/jp/8/docs/api/");
+            linksOffline("http://d.android.com/reference", "${android.sdkDirectory}/docs/reference")
+            setMemberLevel(JavadocMemberLevel.PUBLIC)
+            docEncoding = 'UTF-8'
+            encoding = 'UTF-8'
+            charSet = 'UTF-8'
+        }
+        exclude '**/org/deviceconnect/message/server/**'
+        exclude '**/BuildConfig.java'
+        exclude '**/R.java'
+    }
+}
 
 def githubPropertiesFile = rootProject.file("github.properties")
 def githubProperties = new Properties()
